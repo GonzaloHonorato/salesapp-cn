@@ -1,0 +1,244 @@
+.venta-page {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.page-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.page-eyebrow {
+  color: var(--accent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.page-title {
+  color: var(--dark);
+  font-size: 2rem;
+  line-height: 1.15;
+}
+
+.login-panel,
+.productos-panel,
+.compra-panel,
+.boleta {
+  background: var(--surface);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.login-panel {
+  display: grid;
+  gap: 0.9rem;
+  max-width: 520px;
+  padding: 1.5rem;
+}
+
+.login-panel h2,
+.section-heading h2 {
+  font-size: 1rem;
+}
+
+.login-panel p,
+.section-heading span,
+.producto-card p,
+.cart-row p {
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.venta-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 390px;
+  gap: 1rem;
+  align-items: start;
+}
+
+.productos-panel,
+.compra-panel {
+  padding: 1rem;
+}
+
+.section-heading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 0.9rem;
+}
+
+.productos-list,
+.cart-list {
+  display: grid;
+  gap: 0.65rem;
+}
+
+.producto-card {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 1rem;
+  align-items: center;
+  background: var(--surface-2);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 1rem;
+}
+
+.producto-categoria {
+  color: var(--primary);
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.2rem;
+  text-transform: uppercase;
+}
+
+.producto-card h3,
+.cart-row h3 {
+  font-size: 0.98rem;
+  line-height: 1.25;
+}
+
+.producto-action {
+  display: grid;
+  justify-items: end;
+  gap: 0.55rem;
+}
+
+.compra-panel {
+  position: sticky;
+  top: 84px;
+}
+
+.empty-cart {
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  color: var(--muted);
+  padding: 2rem 1rem;
+  text-align: center;
+}
+
+.cart-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 72px auto 34px;
+  gap: 0.7rem;
+  align-items: center;
+  border-bottom: 1px solid var(--border-light);
+  padding-bottom: 0.65rem;
+}
+
+.cart-row input {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  height: 36px;
+  padding: 0 0.45rem;
+  width: 72px;
+}
+
+.icon-button {
+  align-items: center;
+  background: transparent;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  color: var(--muted);
+  cursor: pointer;
+  display: inline-flex;
+  height: 34px;
+  justify-content: center;
+  width: 34px;
+}
+
+.icon-button:hover {
+  border-color: var(--error);
+  color: var(--error);
+}
+
+.cart-total,
+.boleta-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+}
+
+.cart-total strong,
+.boleta-total strong {
+  font-size: 1.35rem;
+}
+
+.checkout-button {
+  justify-content: center;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.boleta {
+  display: grid;
+  gap: 0.7rem;
+  margin-top: 1rem;
+  padding: 1rem;
+}
+
+.boleta-header,
+.boleta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.boleta-header {
+  border-bottom: 1px solid var(--border-light);
+  color: var(--muted);
+  font-size: 0.8rem;
+  padding-bottom: 0.7rem;
+}
+
+.boleta-row {
+  font-size: 0.88rem;
+}
+
+.boleta-total {
+  border-top: 1px solid var(--border-light);
+  padding-top: 0.8rem;
+}
+
+@media (max-width: 880px) {
+  .venta-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .compra-panel {
+    position: static;
+  }
+}
+
+@media (max-width: 560px) {
+  .page-header,
+  .producto-card,
+  .producto-action {
+    align-items: stretch;
+    grid-template-columns: 1fr;
+  }
+
+  .page-header {
+    display: grid;
+  }
+
+  .cart-row {
+    grid-template-columns: 1fr 64px 34px;
+  }
+
+  .cart-row strong {
+    grid-column: 1 / -1;
+  }
+}

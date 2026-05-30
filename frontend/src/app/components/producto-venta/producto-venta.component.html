@@ -1,0 +1,131 @@
+<section class="venta-page">
+  <div class="page-header">
+    <div>
+      <span class="page-eyebrow">PUNTO DE VENTA</span>
+      <h1 class="page-title">Generacion de ventas y boletas</h1>
+    </div>
+    <button type="button" class="btn-secondary" (click)="limpiarCompra()" [disabled]="compra().length === 0">
+      Limpiar compra
+    </button>
+  </div>
+
+  @if (!auth.currentUser()) {
+    <div class="login-panel">
+      <h2>Acceso protegido por IDaaS</h2>
+      <p>Inicia sesion con Azure AD B2C para consultar productos y generar boletas desde el BFF.</p>
+      <button type="button" class="btn-primary" (click)="auth.login()">Entrar</button>
+    </div>
+  } @else {
+    @if (loading()) {
+      <div class="state-container">
+        <div class="spinner"></div>
+        <p class="state-text">Cargando productos...</p>
+      </div>
+    }
+
+    @if (error()) {
+      <div class="error-banner" role="alert">
+        <span class="error-icon" aria-hidden="true">!</span>
+        <p>{{ error() }}</p>
+        <button type="button" (click)="loadProductos()" class="btn-retry">Reintentar</button>
+      </div>
+    }
+
+    @if (!loading()) {
+      <div class="venta-grid">
+        <section class="productos-panel" aria-label="Productos disponibles">
+          <div class="section-heading">
+            <h2>Productos</h2>
+            <span>{{ productos().length }} disponibles</span>
+          </div>
+
+          <div class="productos-list">
+            @for (producto of productos(); track producto.id) {
+              <article class="producto-card">
+                <div>
+                  <span class="producto-categoria">{{ producto.categoria }}</span>
+                  <h3>{{ producto.nombre }}</h3>
+                  <p>Stock: {{ producto.stock }}</p>
+                </div>
+                <div class="producto-action">
+                  <strong>{{ producto.precio | currency:'CLP':'symbol-narrow':'1.0-0' }}</strong>
+                  <button
+                    type="button"
+                    class="btn-primary"
+                    (click)="agregarProducto(producto)"
+                    [disabled]="cantidadEnCompra(producto.id) >= producto.stock">
+                    Agregar
+                  </button>
+                </div>
+              </article>
+            }
+          </div>
+        </section>
+
+        <aside class="compra-panel" aria-label="Compra actual">
+          <div class="section-heading">
+            <h2>Compra actual</h2>
+            <span>{{ compra().length }} items</span>
+          </div>
+
+          @if (compra().length === 0) {
+            <div class="empty-cart">
+              <p>Selecciona productos para armar la compra.</p>
+            </div>
+          } @else {
+            <div class="cart-list">
+              @for (item of compra(); track item.producto.id) {
+                <article class="cart-row">
+                  <div>
+                    <h3>{{ item.producto.nombre }}</h3>
+                    <p>{{ item.producto.precio | currency:'CLP':'symbol-narrow':'1.0-0' }} c/u</p>
+                  </div>
+                  <input
+                    type="number"
+                    min="1"
+                    [max]="item.producto.stock"
+                    [value]="item.cantidad"
+                    (input)="cambiarCantidad(item.producto.id, $any($event.target).valueAsNumber)"
+                    aria-label="Cantidad"
+                  />
+                  <strong>{{ item.producto.precio * item.cantidad | currency:'CLP':'symbol-narrow':'1.0-0' }}</strong>
+                  <button type="button" class="icon-button" (click)="quitarProducto(item.producto.id)" aria-label="Quitar producto">
+                    x
+                  </button>
+                </article>
+              }
+            </div>
+
+            <div class="cart-total">
+              <span>Total estimado</span>
+              <strong>{{ totalActual() | currency:'CLP':'symbol-narrow':'1.0-0' }}</strong>
+            </div>
+
+            <button type="button" class="btn-primary checkout-button" (click)="generarBoleta()" [disabled]="generating()">
+              {{ generating() ? 'Generando...' : 'Generar boleta' }}
+            </button>
+          }
+
+          @if (boleta(); as ticket) {
+            <section class="boleta">
+              <div class="boleta-header">
+                <span>Boleta generada</span>
+                <time>{{ ticket.fecha | date:'short' }}</time>
+              </div>
+              @for (detalle of ticket.productos; track detalle.productoId) {
+                <div class="boleta-row">
+                  <span>{{ detalle.nombre }} x{{ detalle.cantidad }}</span>
+                  <strong>{{ detalle.subtotal | currency:'CLP':'symbol-narrow':'1.0-0' }}</strong>
+                </div>
+              }
+              <div class="boleta-total">
+                <span>Total final</span>
+                <strong>{{ ticket.total | currency:'CLP':'symbol-narrow':'1.0-0' }}</strong>
+              </div>
+            </section>
+          }
+        </aside>
+      </div>
+    }
+  }
+</section>
