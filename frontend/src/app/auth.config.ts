@@ -3,6 +3,6 @@ export const authConfig = {
   authority:
     'https://ghdevcompany.b2clogin.com/ghdevcompany.onmicrosoft.com/B2C_1_dn-gh',
   knownAuthorities: ['ghdevcompany.b2clogin.com'],
-  redirectUri: 'http://localhost:4200',
+  redirectUri: window.location.origin,
   navigateToLoginRequestUrl: false
 };

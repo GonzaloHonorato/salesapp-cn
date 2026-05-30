@@ -33,7 +33,7 @@ Backend:
 Variables relevantes:
 
 ```bash
-SPRING_DATASOURCE_URL=jdbc:oracle:thin:@dbsales_high?TNS_ADMIN=/app/wallet
+SPRING_DATASOURCE_URL=jdbc:oracle:thin:@dbbooks_high?TNS_ADMIN=/app/wallet
 SPRING_DATASOURCE_USERNAME=ADMIN
 SPRING_DATASOURCE_PASSWORD=change-me
 IDP_ISSUER_URI=https://ghdevcompany.b2clogin.com/ac1dbc9b-27a4-4004-a719-42d96af26d37/v2.0/
