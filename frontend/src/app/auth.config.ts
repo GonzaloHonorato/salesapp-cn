@@ -3,6 +3,9 @@ export const authConfig = {
   authority:
     'https://ghdevcompany.b2clogin.com/ghdevcompany.onmicrosoft.com/B2C_1_dn-gh',
   knownAuthorities: ['ghdevcompany.b2clogin.com'],
-  redirectUri: window.location.origin,
+  redirectUri:
+    window.location.hostname === 'localhost'
+      ? 'http://localhost:4200'
+      : 'https://salesapp-cn.adndigital.cl',
   navigateToLoginRequestUrl: false
 };
